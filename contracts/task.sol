@@ -1,11 +1,20 @@
 pragma solidity ^ 0.4.23;
 
-contract taskFacory {
+contract Facory {
+    address[] deployedTaskForces;
     
-}
+    function createTaskForce() public {
+        address newTaskForce = new TaskForce(msg.sender);
+        deployedTaskForces.push(newTaskForce);
+    }
+    
+    function getDeployedTaskForces() public view returns(address[]) {
+        return deployedTaskForces;
+    }
+ }
 
 
-contract task {
+contract TaskForce {
     struct toDo {
         bool exist;
         bool complete;
@@ -22,16 +31,33 @@ contract task {
     uint128 public failTaskCounts;
     
     address public receiverAddress;
-    address constant senderAddress = 0xca35b7d915458ef540ade6068dfe2f44e8fa733c;
+    address public manager;
     
     modifier onlysenderAddress() {
-        require(msg.sender == senderAddress);
+        require(msg.sender == manager);
         _;
     }
     
     modifier onlyreceiverAddress() {
         require(msg.sender == receiverAddress);
         _;
+    }
+    
+    constructor(address creater) public {
+        manager = creater;
+
+    }
+    
+    function getInfo() public view returns (
+        uint64 timestampNow, uint256 taskcounts, uint128 completeTask, uint128 cancelTask, uint128 failTaskCounts
+        ) {
+        return (
+            uint64(block.timestamp),
+            todos.length,
+            completeTaskCounts,
+            cancelTaskCounts,
+            failTaskCounts
+        );
     }
     
     function setReceiverAddress(address _receiverAddress) public onlysenderAddress(){
@@ -60,7 +86,7 @@ contract task {
         require(!todos.complete);
         require(block.timestamp <= todos.deadline);
         
-        senderAddress.transfer(todos.value);
+        manager.transfer(todos.value);
         todos.complete = true;
         completeTaskCounts++;
     }
@@ -72,7 +98,7 @@ contract task {
         require(!todos.complete);
         require(block.timestamp <= todos.deadline);
         
-        senderAddress.transfer(todos.value);
+        manager.transfer(todos.value);
         
         todos.complete = true;
         cancelTaskCounts++;
@@ -87,14 +113,6 @@ contract task {
         receiverAddress.transfer(todos.value);
         todos.complete = true;
         failTaskCounts++;
-    }
-    
-    
-    function getInfo() public view returns (uint64 timestampNow, uint256 taskcounts) {
-        return (
-            uint64(block.timestamp),
-            todos.length
-        );
     }
 
 }
