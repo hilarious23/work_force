@@ -13,10 +13,14 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "nuxt": "^1.0.0",
-    "bootstrap-vue": "^1.0.2",
+    "@nuxtjs/axios": "^5.0.0",
     "bootstrap": "^4.0.0-beta.2",
-    "@nuxtjs/axios": "^5.0.0"
+    "bootstrap-vue": "^1.0.2",
+    "dotenv": "^6.0.0",
+    "fs": "0.0.1-security",
+    "nuxt": "^1.0.0",
+    "truffle-hdwallet-provider": "0.0.6",
+    "web3": "^0.20.7"
   },
   "devDependencies": {
     "cross-env": "^5.0.1",
