@@ -27,7 +27,7 @@ module.exports = {
               );
             },
             network_id: 4,
-            gas: 7000000, // Gas limit used for deploys
+            gas: 7001000, // Gas limit used for deploys
             gasPrice: 90000000000,
         },
 
