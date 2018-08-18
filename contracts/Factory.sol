@@ -1,6 +1,7 @@
-pragma solidity ^ 0.4.17;
+pragma solidity ^ 0.4.24;
 
-contract Facory{
+
+contract Factory {
     address[] deployedTaskForces;
 
     function createTaskForce() public {
@@ -13,7 +14,7 @@ contract Facory{
     }
  }
 
-contract TaskForce{
+contract TaskForce {
     struct task {
         bool exist;
         bool complete;
@@ -42,7 +43,7 @@ contract TaskForce{
     }
 
     constructor(address creater) public {
-        manager = creater;
+      manager = creater;
     }
 
     function getInfo() public view returns (
