@@ -1,0 +1,66 @@
+Arguments: 
+  /Users/Shunsuke/.nodebrew/node/v8.9.4/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js run dev
+
+PATH: 
+  /Users/Shunsuke/Downloads/google-cloud-sdk/bin:/sw/bin:/sw/sbin:/Users/Shunsuke/.rbenv/shims:/usr/local/Cellar/pyenv-virtualenv/1.1.1/shims:/Users/Shunsuke/.pyenv/shims:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Users/Shunsuke/.pyenv/bin:/Users/Shunsuke/dev/bin:/Users/Shunsuke/.nodebrew/current/bin:/Users/Shunsuke/.nodebrew/current/bin:/Users/xxxxx/.nodebrew/current/bin
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  8.9.4
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  {
+    "name": "work_force",
+    "version": "1.0.0",
+    "description": "My extraordinary Nuxt.js project",
+    "author": "hideUW",
+    "private": true,
+    "scripts": {
+      "dev": "nuxt",
+      "build": "nuxt build",
+      "start": "nuxt start",
+      "generate": "nuxt generate",
+      "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+      "precommit": "npm run lint"
+    },
+    "dependencies": {
+      "nuxt": "^1.0.0",
+      "bootstrap-vue": "^1.0.2",
+      "bootstrap": "^4.0.0-beta.2",
+      "@nuxtjs/axios": "^5.0.0"
+    },
+    "devDependencies": {
+      "cross-env": "^5.0.1",
+      "babel-eslint": "^8.2.1",
+      "eslint": "^5.0.1",
+      "eslint-loader": "^2.0.0",
+      "eslint-plugin-vue": "^4.0.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Command failed.
+  Exit code: 127
+  Command: sh
+  Arguments: -c nuxt
+  Directory: /Users/Shunsuke/hackathon/work_force
+  Output:
+  
+      at ProcessTermError.MessageError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:186:110)
+      at new ProcessTermError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:226:113)
+      at ChildProcess.<anonymous> (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:30281:17)
+      at emitTwo (events.js:126:13)
+      at ChildProcess.emit (events.js:214:7)
+      at maybeClose (internal/child_process.js:925:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)
