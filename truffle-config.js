@@ -1,8 +1,8 @@
 require("dotenv").config();
 const { readFileSync } = require('fs');
 const HDWalletProvider = require("truffle-hdwallet-provider");
-const mnemonic = process.env.MNEMONIC;
-const accessToken = process.env.INFURA;
+const mnemonic = process.envrc.MNEMONIC;
+const accessToken = process.envrc.INFURA;
 
 module.exports = {
     solc: {
