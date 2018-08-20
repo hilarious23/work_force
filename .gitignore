@@ -13,4 +13,5 @@ dist
 # IDE
 .idea
 
+# firebase 
 .envrc
