@@ -1,9 +1,16 @@
 <template>
-  <div>
-    <nuxt-link :to="'/taskforce/' + deployedContract">
-      {{ deployedContract }}
-    </nuxt-link>
-  </div>
+  <section>
+    <div>
+      <nuxt-link :to="'/taskforce/' + deployedTaskForce0">
+        {{ deployedTaskForce0 }}
+      </nuxt-link>
+    </div>
+    <div>
+      <nuxt-link :to="'/taskforce/' + deployedTaskForce1">
+        {{ deployedTaskForce1 }}
+      </nuxt-link>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -13,7 +20,8 @@ import Web3 from 'web3'
 export default {
     data() {
       return {
-        deployedContract: ''
+        deployedTaskForce0: '',
+        deployedTaskForce1: ''
       }
     },
     mounted() {
@@ -29,9 +37,8 @@ export default {
           .contract(factoryabi)
           .at(factoryaddress)
         this.factory.getDeployedTaskForces.call((err,res) => {
-          res.map(address => {
-              this.deployedContract = address
-          })
+              this.deployedTaskForce0 = res[0]
+              this.deployedTaskForce1 = res[1]
         })
       }
     }
