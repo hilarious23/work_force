@@ -1,6 +1,8 @@
 <template>
   <div>
-    {{ deployedContract　}}
+    <nuxt-link :to="'/taskforce/' + deployedContract">
+      {{ deployedContract }}
+    </nuxt-link>
   </div>
 </template>
 
@@ -27,7 +29,9 @@ export default {
           .contract(factoryabi)
           .at(factoryaddress)
         this.factory.getDeployedTaskForces.call((err,res) => {
-          this.deployedContract = res
+          res.map(address => {
+              this.deployedContract = address
+          })
         })
       }
     }
