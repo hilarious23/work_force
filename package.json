@@ -19,10 +19,12 @@
     "dotenv": "^6.0.0",
     "firebase": "^5.4.0",
     "fs": "0.0.1-security",
+    "fs-extra": "^7.0.0",
     "moment": "^2.22.2",
     "nuxt": "^1.0.0",
-    "truffle-hdwallet-provider": "0.0.6",
-    "web3": "^0.20.7"
+    "solc": "^0.4.24",
+    "truffle-hdwallet-provider": "0.0.3",
+    "web3": "^1.0.0-beta.26"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",

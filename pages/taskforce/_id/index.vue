@@ -101,7 +101,7 @@ export default {
                 obj['deadline'] = this.deadline;
                 obj['value'] = this.value;
                 this.array.push(obj);
-              },
+              }
             )
           }
         })

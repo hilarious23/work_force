@@ -14,4 +14,4 @@ dist
 .idea
 
 # firebase
-.envrc
+.env
