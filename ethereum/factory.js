@@ -1,5 +1,5 @@
 import web3 from './web3';
-import CampaignFactory from './build/Factory.json';
+import Factory from './build/Factory.json';
 
 const instance = new web3.eth.Contract(
   JSON.parse(Factory.interface),
