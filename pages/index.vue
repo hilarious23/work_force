@@ -1,26 +1,32 @@
 <template>
-  <section>
-    <div id="v-for-object">
-      <div v-for="obj in array" :key="obj.id">
-        <nuxt-link :to="'/taskforce/' + obj.taskForce">
-          <p>{{ obj.taskForce }}</p>
-        </nuxt-link>
+  <div>
+    <section>
+      <div id="v-for-object">
+        <div v-for="obj in array" :key="obj.id">
+          <nuxt-link :to="'/taskforce/' + obj.taskForce">
+            <p>{{ obj.taskForce }}</p>
+          </nuxt-link>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+    <section>
+      <button @click="createTaskForce">Create</button> 
+    </section>
+  </div>
 </template>
 
 <script>
-import Factory from '~/build/contracts/Factory.json'
-import Web3 from 'web3'
-import factory from '../ethereum/factory';
+import web3 from '../ethereum/web3'
+import factory from '../ethereum/factory'
 
 export default {
     data() {
       return {
+        loading: '',
         deployedTaskForce0: '',
         taskForce: '',
-        array: []
+        array: [],
+        errorMessage: ''
       }
     },
     mounted() {
@@ -29,26 +35,30 @@ export default {
     methods: {
       async init() {
         var res = await factory.methods.getDeployedTaskForces().call()
-        for(var i = 0;  i < 2;  i++) {
+        for(var i = 0;  i < res.length;  i++) {
           var obj = {};
           this.taskForce = await res[i]
-          console.log(i)
           obj['taskForce'] = this.taskForce;
           this.array.push(obj);
         }
-      
-        // this.web3 = new Web3(window.web3.currentProvider)
-        // this.web3.eth.defaultAccount = this.web3.eth.accounts[0]
-        // const factoryabi = Factory.abi
-        // const factoryaddress = Object.values(Factory.networks)[0].address
-        // this.factory = this.web3.eth
-        //   .contract(factoryabi)
-        //   .at(factoryaddress)
-        // this.factory.getDeployedTaskForces.call((err,res) => {
-        //       this.deployedTaskForce0 = res[0]
-        //       this.deployedTaskForce1 = res[1]
-        // })
-      }
+      },
+      async createTaskForce() {
+        this.loading = true
+        try {
+          const accounts = await web3.eth.getAccounts();
+          await factory.methods
+            .createTaskForce()
+            .send({ from: accounts[0] });
+          console.log('success')
+          this.$router.go(`/taskforce/`)
+          redirect('/')
+        }
+        catch (err) {
+          console.log(err)
+          this.errorMessage = err.message
+        }
+        this.loading = false
+      },
     }
 }
 </script>
