@@ -21,7 +21,7 @@ const deploy = async () => {
     JSON.parse(compiledFactory.interface)
   )
     .deploy({ data: "0x" + compiledFactory.bytecode })
-    .send({ gas: '7001000', gasPrice: 90000000000, from: accounts[0] });
+    .send({ gas: '7000000', gasPrice: 90000000000, from: accounts[0] });
 
   console.log('Contract deployed to', result.options.address);
 };

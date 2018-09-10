@@ -4,12 +4,12 @@ pragma solidity ^ 0.4.24;
 contract Factory {
     address[] deployedTaskForces;
 
-    function createTaskForce() public {
+    function createTaskForce() external {
         address newTaskForce = new TaskForce(msg.sender);
         deployedTaskForces.push(newTaskForce);
     }
 
-    function getDeployedTaskForces() public view returns(address[]) {
+    function getDeployedTaskForces() external view returns(address[]) {
         return deployedTaskForces;
     }
  }
@@ -28,6 +28,7 @@ contract TaskForce {
     uint128 public cancelTaskCounts;
     uint128 public failTaskCounts;
     uint128 public taskCounts;
+    uint256 public lostValue;
 
     address public receiverAddress;
     address public manager;
@@ -46,7 +47,7 @@ contract TaskForce {
       manager = creater;
     }
 
-    function getInfo() public view returns (
+    function getInfo() external view returns (
         uint64 timestampNow, uint256 taskcounts, uint128 completeTask, uint128 cancelTask, uint128 failTask
         ) {
         return (
@@ -59,13 +60,13 @@ contract TaskForce {
     }
 
 
-    function setReceiverAddress(address _receiverAddress) public onlysenderAddress(){
+    function setReceiverAddress(address _receiverAddress) external onlysenderAddress(){
         require(_receiverAddress != msg.sender);
         receiverAddress = _receiverAddress;
     }
 
 
-    function createTask(string _desctiption, uint64 _deadline) onlysenderAddress() payable{
+    function createTask(string _desctiption, uint64 _deadline) external onlysenderAddress() payable{
         require(msg.value >= 1);
         require(uint64(block.timestamp) + 100 < _deadline);
         task memory newtask = task({
@@ -80,7 +81,7 @@ contract TaskForce {
     }
 
 
-    function completeTask(uint256 index) onlysenderAddress() {
+    function completeTask(uint256 index) external onlysenderAddress() {
         task storage tasks = addresstotasks[msg.sender][index];
         require(tasks.exist);
         require(!tasks.complete);
@@ -92,7 +93,7 @@ contract TaskForce {
     }
 
 
-    function cancelTask(uint64 index) onlysenderAddress public{
+    function cancelTask(uint64 index) external onlysenderAddress() {
         task storage tasks = addresstotasks[msg.sender][index];
         require(tasks.exist);
         require(!tasks.complete);
@@ -105,7 +106,7 @@ contract TaskForce {
     }
 
 
-    function getReward(uint64 index) onlyreceiverAddress {
+    function getReward(uint64 index) external onlyreceiverAddress() {
         task storage tasks = addresstotasks[manager][index];
         require(tasks.exist);
         require(!tasks.complete);
@@ -113,6 +114,7 @@ contract TaskForce {
 
         receiverAddress.transfer(tasks.value);
         tasks.complete = true;
+        lostValue = lostValue + tasks.value;
         failTaskCounts++;
     }
 
