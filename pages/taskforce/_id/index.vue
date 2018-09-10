@@ -7,7 +7,6 @@
           <p>Receiver {{ receiver }}</p>
           <input type="text" v-model="receiverAddress">
           <button @click="setReceiverAddress">setReceiverAddress</button>
-          <p>{{ timestampnow }}</p>
           <p>Task Amount {{ taskCount }}</p>
           <p>Complete {{ completedTask }}</p>
           <p>Cancel {{ canceledTask }}</p>
@@ -17,12 +16,13 @@
         <section>
           <input type="text" v-model="newtask">
           <input type="int" v-model="date">
-          <button @click="createTask">create New Task</button>            
+          <button @click="createTask">create New Task</button>
         </section>
         <section>
           <div id="v-for-object">
             <div v-for="struct in array" :key="struct.id">
               <p>Index: {{ struct.idx }}</p>
+              <p>inTime {{ struct.inTime }}</p>
               <p>{{ struct.status }}</p>
               <p>{{ struct.task }}</p>
               <p>{{ struct.deadline }}</p>
@@ -49,7 +49,6 @@ export default {
         owner: '',
         receiver: '',
         receiverAddress: '',
-        timestampnow: '',
         taskCount: '',
         completedTask: '',
         canceledTask: '',
@@ -57,6 +56,7 @@ export default {
         newtask: '',
         date: '',
         idx: 0,
+        inTime: true,
         status: false,
         task: '',
         deadline: '',
@@ -74,9 +74,8 @@ export default {
         const num = await web3.eth.getBalance(this.$route.params.id);
         console.log(num);
         this.balance = await Math.floor(web3.utils.fromWei(num, 'ether') * 10000) / 10000;
-        this.owner = await taskforce.methods.manager().call()
+        this.owner = await taskforce.methods.manager().call();
         const info = await taskforce.methods.getInfo().call();
-          this.timestampnow = info[0]
           this.taskCount = info[1]
           this.completedTask = info[2]
           this.canceledlTask = info[3]
@@ -88,15 +87,18 @@ export default {
                 this.owner,
                 i
               )
-              .call()
-            console.log(res)
+              .call();
             var obj = {};
-            this.idx = i
-            this.status = res[1]
-            this.task = res[2]
-            this.deadline = moment(res[3]*1000).format('MMMM Do YYYY, h:mm:ss a')
-            this.value = Math.floor(web3.utils.fromWei(res[4], 'ether') * 10000) / 10000
+            this.idx = i;
+            this.status = res[1];
+            this.task = res[2];
+            this.deadline = moment(res[3]*1000).format('MMMM Do YYYY, h:mm:ss a');
+            if (res[3]*1000 <= Date.now()) {
+              this.inTime = false;
+            }
+            this.value = Math.floor(web3.utils.fromWei(res[4], 'ether') * 10000) / 10000;
             obj['idx'] = this.idx;
+            obj['inTime'] = this.inTime;
             obj['status'] = this.status;
             obj['task'] = this.task;
             obj['deadline'] = this.deadline;
@@ -107,21 +109,21 @@ export default {
         this.lostEth = Math.floor(web3.utils.fromWei(lostValue, 'ether') * 10000) / 10000
       },
       async setReceiverAddress() {
-        this.loading = true
+        this.loading = true;
         try {
           const taskforce = TaskForce(this.$route.params.id);
           const accounts = await web3.eth.getAccounts();
           await taskforce.methods
             .setReceiverAddress(this.receiverAddress)
-            .send({ from: accounts[0] })
-          console.log('success')
+            .send({ from: accounts[0] });
+          console.log('success');
           this.$router.go(`/taskforce/`)
           redirect('/')
         } catch (err) {
-          console.log(err)
-          this.errorMessage = err.message
+          console.log(err);
+          this.errorMessage = err.message;
         }
-        this.loading = false
+        this.loading = false;
       },
       async createTask() {
         this.loading = true
@@ -206,7 +208,7 @@ export default {
           this.errorMessage = err.message
         }
         this.loading = false
-      },      
-    }    
+      },
+    }
 }
 </script>
