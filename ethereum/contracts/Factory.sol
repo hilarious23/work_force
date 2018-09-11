@@ -2,6 +2,8 @@ pragma solidity ^ 0.4.24;
 
 
 contract Factory {
+
+
     address[] deployedTaskForces;
 
     function createTaskForce() external {
@@ -14,7 +16,10 @@ contract Factory {
     }
  }
 
+
 contract TaskForce {
+
+
     struct task {
         bool exist;
         bool complete;
@@ -59,12 +64,10 @@ contract TaskForce {
         );
     }
 
-
     function setReceiverAddress(address _receiverAddress) external onlysenderAddress(){
         require(_receiverAddress != msg.sender);
         receiverAddress = _receiverAddress;
     }
-
 
     function createTask(string _desctiption, uint64 _deadline) external onlysenderAddress() payable{
         require(msg.value >= 1);
@@ -80,7 +83,6 @@ contract TaskForce {
         taskCounts++;
     }
 
-
     function completeTask(uint256 index) external onlysenderAddress() {
         task storage tasks = addresstotasks[msg.sender][index];
         require(tasks.exist);
@@ -91,7 +93,6 @@ contract TaskForce {
         tasks.complete = true;
         completeTaskCounts++;
     }
-
 
     function cancelTask(uint64 index) external onlysenderAddress() {
         task storage tasks = addresstotasks[msg.sender][index];
@@ -104,7 +105,6 @@ contract TaskForce {
         tasks.complete = true;
         cancelTaskCounts++;
     }
-
 
     function getReward(uint64 index) external onlyreceiverAddress() {
         task storage tasks = addresstotasks[manager][index];

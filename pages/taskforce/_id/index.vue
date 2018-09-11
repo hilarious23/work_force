@@ -23,7 +23,6 @@
             <div v-for="struct in array" :key="struct.id">
               <p>Index: {{ struct.idx }}</p>
               <p>inTime {{ struct.inTime }}</p>
-              <p>{{ struct.status }}</p>
               <p>{{ struct.task }}</p>
               <p>{{ struct.deadline }}</p>
               <p>{{ struct.value }} ETH</p>
@@ -57,7 +56,6 @@ export default {
         date: '',
         idx: 0,
         inTime: true,
-        status: false,
         task: '',
         deadline: '',
         value: '',
@@ -88,22 +86,22 @@ export default {
                 i
               )
               .call();
-            var obj = {};
-            this.idx = i;
-            this.status = res[1];
-            this.task = res[2];
-            this.deadline = moment(res[3]*1000).format('MMMM Do YYYY, h:mm:ss a');
-            if (res[3]*1000 <= Date.now()) {
-              this.inTime = false;
+            if (res[1] == false) {
+              var obj = {};
+              this.idx = i;
+              this.task = res[2];
+              this.deadline = moment(res[3]*1000).format('MMMM Do YYYY, h:mm:ss a');
+              if (res[3]*1000 <= Date.now()) {
+                this.inTime = false;
+              }
+              this.value = Math.floor(web3.utils.fromWei(res[4], 'ether') * 10000) / 10000;
+              obj['idx'] = this.idx;
+              obj['inTime'] = this.inTime;
+              obj['task'] = this.task;
+              obj['deadline'] = this.deadline;
+              obj['value'] = this.value;
+              this.array.push(obj);
             }
-            this.value = Math.floor(web3.utils.fromWei(res[4], 'ether') * 10000) / 10000;
-            obj['idx'] = this.idx;
-            obj['inTime'] = this.inTime;
-            obj['status'] = this.status;
-            obj['task'] = this.task;
-            obj['deadline'] = this.deadline;
-            obj['value'] = this.value;
-            this.array.push(obj);
           }
         const lostValue = await taskforce.methods.lostValue().call()
         this.lostEth = Math.floor(web3.utils.fromWei(lostValue, 'ether') * 10000) / 10000
