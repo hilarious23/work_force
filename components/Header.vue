@@ -1,26 +1,27 @@
 <template>
-    <header class="header">
-        <ul class="nav-items">
+    <header >
+        <!-- <ul class="nav-items">
             <li class="home-botton">
                 <nuxt-link to="/">Home</nuxt-link>
             </li>
-        </ul>
+        </ul> -->
     </header>
 </template>
 
-<style scoped>
-    .header {
+<style>
+    header {
         width: 100%;
         height: 60px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         position: fixed;
+        padding: 0px;
         left: 0px;
         right: 0px;
         top: 0px;
+        margin: 0px;
+        background-color:black;
     }
-    .nav-items {
+    /*
+    nav-items {
         list-style: none;
         padding: 0;
         margin: 0;
@@ -38,4 +39,5 @@
     .nav-items a:active {
         color: white;
     }
+    */
 </style>

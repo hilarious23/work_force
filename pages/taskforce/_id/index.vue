@@ -1,7 +1,7 @@
 <template>
     <div>
         <section>
-          <p>{{ $route.params.id }}</p>
+          <p class="title">{{ $route.params.id }}</p>
           <p>Balance {{ balance }} ETH</p>
           <p>Owner {{ owner }}</p>
           <p>Receiver {{ receiver }}</p>
@@ -210,3 +210,9 @@ export default {
     }
 }
 </script>
+
+<style>
+.title {
+  margin-top: 70px;
+}
+</style>
