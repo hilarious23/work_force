@@ -8,7 +8,7 @@
           <input type="text" v-model="receiverAddress">
           <button @click="setReceiverAddress">setReceiverAddress</button>
           <p>Task Amount {{ taskCount }}</p>
-          <p>Complete {{ completedTask }}</p>
+          <p>Done {{ completedTask }}</p>
           <p>Cancel {{ canceledTask }}</p>
           <p>Fail {{ failTask }}</p>
           <p>Lost Amount {{ lostEth }} ETH</p>
