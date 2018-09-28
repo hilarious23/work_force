@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <section>
           <p class="title">{{ $route.params.id }}</p>
           <p>Balance {{ balance }} ETH</p>
@@ -214,5 +214,8 @@ export default {
 <style>
 .title {
   margin-top: 70px;
+}
+.container {
+  margin: 100px
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <section>
       <div id="v-for-object">
         <div v-for="obj in array" :key="obj.id">
@@ -63,5 +63,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+  .container {
+    margin: 100px
+  }
 </style>
