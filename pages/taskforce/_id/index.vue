@@ -19,6 +19,7 @@
           <button @click="createTask">create New Task</button>
         </section>
         <!-- この部分コンポーネント化してscopeつきのものにすれば、falseのものだけ表示できそう -->
+        <!-- あとv-bind:classとか:styleですわ -->
         <section>
           <div id="v-for-object">
             <div v-for="struct in array" :key="struct.id">
